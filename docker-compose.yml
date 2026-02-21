@@ -1,0 +1,47 @@
+services:
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    container_name: resort-backend
+    ports:
+      - "5084:5084"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5084
+    networks:
+      - resort-network
+    develop:
+      watch:
+        - path: ./apps/backend/Api
+          action: rebuild
+
+  web:
+    build:
+      context: .
+      dockerfile: ./apps/web/Dockerfile
+    container_name: resort-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://localhost:5084
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./apps/web/public:/app/apps/web/public
+    networks:
+      - resort-network
+    depends_on:
+      - backend
+    develop:
+      watch:
+        - path: ./apps/web/src
+          action: sync
+          target: /app/apps/web/src
+        - path: ./apps/web/public
+          action: sync
+          target: /app/apps/web/public
+
+networks:
+  resort-network:
+    driver: bridge

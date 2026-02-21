@@ -1,0 +1,11 @@
+.git
+.gitignore
+.vscode
+.DS_Store
+node_modules
+dist
+build
+.next
+.turbo
+.husky
+docs
