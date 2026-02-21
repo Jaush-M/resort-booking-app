@@ -1,4 +1,23 @@
 services:
+  db:
+    image: postgres:17-alpine
+    container_name: resort-db
+    environment:
+      POSTGRES_USER: resort_user
+      POSTGRES_PASSWORD: resort_password
+      POSTGRES_DB: resort_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - resort_db_data:/var/lib/postgresql/data
+    networks:
+      - resort-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U resort_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   backend:
     build:
       context: ./apps/backend
@@ -9,8 +28,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5084
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=resort_db;Username=resort_user;Password=resort_password
     networks:
       - resort-network
+    depends_on:
+      db:
+        condition: service_healthy
     develop:
       watch:
         - path: ./apps/backend/Api
@@ -45,3 +68,6 @@ services:
 networks:
   resort-network:
     driver: bridge
+
+volumes:
+  resort_db_data:
