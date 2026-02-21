@@ -1,0 +1,21 @@
+{
+  "name": "resort-booking-app",
+  "private": true,
+  "scripts": {
+    "prepare": "husky",
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "rm -rf node_modules .turbo && pnpm run -r clean"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
+    "husky": "^9.1.7",
+    "prettier": "^3.6.0",
+    "prettier-plugin-tailwindcss": "^0.7.1",
+    "turbo": "^2.8.9"
+  },
+  "packageManager": "pnpm@10.19.0"
+}

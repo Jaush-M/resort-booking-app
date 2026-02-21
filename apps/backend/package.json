@@ -1,0 +1,8 @@
+{
+  "name": "backend",
+  "scripts": {
+    "dev": "dotnet watch run --project Api",
+    "build": "dotnet build Api",
+    "test": "dotnet test Api"
+  }
+}
