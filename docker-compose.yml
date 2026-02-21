@@ -13,7 +13,7 @@ services:
     networks:
       - resort-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U resort_user"]
+      test: ["CMD-SHELL", "pg_isready -U resort_user -d resort_db"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -47,7 +47,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=development
       - NEXT_PUBLIC_API_URL=http://localhost:5084
     volumes:
       - ./apps/web/src:/app/apps/web/src
