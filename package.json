@@ -1,5 +1,5 @@
 {
-  "name": "bun-mono",
+  "name": "resort-booking-app",
   "private": true,
   "scripts": {
     "prepare": "husky",
