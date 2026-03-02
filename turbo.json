@@ -1,19 +1,37 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
+  "globalEnv": [
+    "VERCEL",
+    "NODE_ENV",
+    "APP_NAME",
+    "WEB_URL",
+    "API_PORT",
+    "API_URL",
+    "TRUSTED_ORIGINS",
+    "DATABASE_URL",
+    "BETTER_AUTH_URL",
+    "BETTER_AUTH_SECRET",
+    "MAIL_*",
+    "NEXT_PUBLIC_*",
+    "SKIP_ENV_VALIDATION"
+  ],
   "tasks": {
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
     "build": {
+      "env": ["VERCEL"],
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**", "bin/**", "obj/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", ".vercel/output/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
     },
-    "test": {}
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
   }
 }
